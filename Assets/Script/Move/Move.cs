@@ -9,15 +9,24 @@ public class Move : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(joystick.inputVector.x != 0 && joystick.inputVector.x > 0){
-			transform.RotateAround (Vector3.zero, Vector3.up, inputVector.x *(50 * Time.deltaTime));
+		if(joystick.inputVector.x > 0){
+			transform.RotateAround (Vector3.zero, Vector3.up, joystick.inputVector.x * (-50) * Time.deltaTime);
+			Debug.Log ("X: "+joystick.inputVector.x);
+			Debug.Log ("Time: "+Time.deltaTime);
 		}
 
-		if(joystick.inputVector.x != 0 && joystick.inputVector.x < 0){
-			transform.RotateAround (Vector3.zero, Vector3.up, inputVector.x *(50 * Time.deltaTime));
+		if( joystick.inputVector.x < 0){
+			transform.RotateAround (Vector3.zero, Vector3.down,joystick.inputVector.x * 50 * Time.deltaTime);
+			Debug.Log ("X: " + joystick.inputVector.x);
 		}
 
-		if(joystick.inputVector.z != 0){
+		if(joystick.inputVector.z > 0){
+			transform.Translate (0, (10 * Time.deltaTime),0);
+			Debug.Log ("UP: "+joystick.inputVector.z);
+		}
+
+		if(joystick.inputVector.z < 0){
+			transform.Translate (0, (-10 * Time.deltaTime),0);
 			Debug.Log ("UP: "+joystick.inputVector.z);
 		}
 

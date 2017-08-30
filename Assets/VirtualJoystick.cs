@@ -6,6 +6,8 @@ using System.Collections;
 public class VirtualJoystick : MonoBehaviour, IDragHandler,IPointerUpHandler,IPointerDownHandler {
 	private Image bgImg;
 	private Image joystickImg;
+
+	[HideInInspector]
 	public Vector3 inputVector;
 
 	private void Start() {
@@ -36,16 +38,12 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler,IPointerUpHandler,IPo
 	}
 
 
-	public float returnVectorX(){
+	public float returnVectorZ(){
 		return inputVector.z;
 	}
 
 	public float returnVectorX(){
 		return inputVector.x;
 	}
-
-	/// <summary>
-	/// /
-	/// </summary>
 		
 }﻿
