@@ -1,14 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Move : MonoBehaviour {
+public class Move : NetworkBehaviour {
 
-	public VirtualJoystick joystick;
+	private GameObject controle;
+	private VirtualJoystick joystick;
 	private GameObject player;
+
+	void Start(){
+		controle = GameObject.Find ("bkgJoystick");
+		joystick = (VirtualJoystick)controle.GetComponent(typeof(VirtualJoystick));
+	}
 
 	// Update is called once per frame
 	void Update () {
+		if(!isLocalPlayer){
+			return;
+		}
+
 		if(joystick.inputVector.x > 0){
 			transform.RotateAround (Vector3.zero, Vector3.up, joystick.inputVector.x * (-50) * Time.deltaTime);
 			Debug.Log ("X: "+joystick.inputVector.x);
