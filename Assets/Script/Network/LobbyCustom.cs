@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+
 public class LobbyCustom : NetworkLobbyManager {
 
 	private string ipAddress = "127.0.0.1";
@@ -24,6 +25,7 @@ public class LobbyCustom : NetworkLobbyManager {
 			SetPort ();
 
 			NetworkLobbyManager.singleton.StartClient ();
+			NetworkManager.singleton.ServerChangeScene ("lobby");
 			Debug.Log ("Client Started");
 		}
 	}
@@ -32,6 +34,7 @@ public class LobbyCustom : NetworkLobbyManager {
 		if (isNetworkActive) {
 			NetworkManager.singleton.StopHost ();
 			Debug.Log ("Host Stoped");
+
 		}
 	}
 
