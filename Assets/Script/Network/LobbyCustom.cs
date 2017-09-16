@@ -7,46 +7,51 @@ using UnityEngine.UI;
 
 public class LobbyCustom : NetworkLobbyManager {
 
-	private string ipAddress = "127.0.0.1";
-	private int portNumber = 7787;
+	NetworkDiscovery broadcst;
 
 	public void HostStarter(){
+
 		if (!NetworkClient.active && !NetworkServer.active) {
 			SetPort ();
 			NetworkManager.singleton.StartHost ();
 			NetworkManager.singleton.ServerChangeScene ("lobby");
-			Debug.Log ("Host Started");
 		}
+			
 	}
+
+	public override void OnStartHost(){
+		NetworkTransport.Shutdown ();
+		NetworkTransport.Init ();
+		broadcst.Initialize ();
+		broadcst.StartAsServer ();
+	}
+
 
 	public void ClientStarter(){
 		if (!NetworkClient.active && !NetworkServer.active) {
 			SetIpAddress ();
 			SetPort ();
-
 			NetworkLobbyManager.singleton.StartClient ();
 			NetworkManager.singleton.ServerChangeScene ("lobby");
+
 			Debug.Log ("Client Started");
 		}
 	}
+		
 
-	public void Disconnect(){
-		if (isNetworkActive) {
+	private void Disconnect(){
 			NetworkManager.singleton.StopHost ();
 			Debug.Log ("Host Stoped");
-
-		}
 	}
 
 	private void SetIpAddress(){
-		string ipAddress = "127.0.0.1";
-		NetworkManager.singleton.networkAddress = ipAddress;
+		NetworkManager.singleton.networkAddress = Network.player.ipAddress;
 	}
 
-	private void SetPort(){
+	public void SetPort(){
 		NetworkManager.singleton.networkPort = 7789;
 	}
-
+	/*
 	private void OnLevelWasLoaded(int level){
 		if(level == 0){
 			SetupMenuSceneButtons();
@@ -68,5 +73,6 @@ public class LobbyCustom : NetworkLobbyManager {
 	private void SetupOtherSceneButtons(){
 		GameObject.Find("btnDisconnect").GetComponent<Button>().onClick.RemoveAllListeners();
 		GameObject.Find("btnDisconnect").GetComponent<Button>().onClick.AddListener(Disconnect);
-	}
+	}*/
+		
 }
